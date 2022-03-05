@@ -1,15 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'service.dart';
+part of 'auth_service.dart';
 
 // **************************************************************************
 // ShelfRouterGenerator
 // **************************************************************************
 
-Router _$ExampleServiceRouter(ExampleService service) {
+Router _$AuthServiceRouter(AuthService service) {
   final router = Router();
-  router.add('GET', r'/', service.getRoot);
-  router.add('GET', r'/echo/<message>', service.getMessage);
-  router.add('POST', r'/create/<id>/something', service.createSomething);
+  router.add('GET', r'/authorize', service.authorize);
   return router;
 }

@@ -1,26 +1,17 @@
 import 'dart:io';
 
-import 'package:noauth/service.dart';
+import 'package:noauth/auth_service.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
-import 'package:shelf_router/shelf_router.dart';
 
 const int defaultPort = 8080;
 
-var _service = ExampleService();
-
-var _fallbackRouter = Router(notFoundHandler: (request) {
-  var headers = {'content-type': 'application/json'};
-  return Response.ok(
-    '{"message": "Catching all requests by default!"}',
-    headers: headers,
-  );
-});
+var _authService = AuthService();
 
 void main(List<String> args) async {
   var _handler = Pipeline()
       .addMiddleware(logRequests())
-      .addHandler(Cascade().add(_service.router).add(_fallbackRouter).handler);
+      .addHandler(Cascade().add(_authService.router).handler);
   var server = await serve(_handler, InternetAddress.anyIPv4, args.port);
   print('Server listening on port ${server.port}');
 }

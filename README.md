@@ -39,7 +39,7 @@ curl localhost:7777/
 ### Generate routes
 
 ```
-dart pub run build_runner build
+dart run build_runner build
 ```
 
 ### Snippets
@@ -47,21 +47,21 @@ dart pub run build_runner build
 **GET request***
 
 ```dart
-  @Route.get('/echo/<message>')
-  Future<Response> getMessage(Request request, String message) async {
-    return Response.ok('$message\n$message\n$message\n');
-  }
+@Route.get('/echo/<message>')
+Future<Response> getMessage(Request request, String message) async {
+  return Response.ok('$message\n$message\n$message\n');
+}
 ```
 
 **Post request**
 
 ```dart
-  @Route.post('/create/<id>/something')
-  Future<Response> createSomething(Request request, String id) async {
-    var body = await request.jsonBody;
-    body['msg'] = '${body['msg']} $id ${body['msg']}';
-    return Response(201, body: json.encode(body));
-  }
+@Route.post('/create/<id>/something')
+Future<Response> createSomething(Request request, String id) async {
+  var body = await request.jsonBody;
+  body['msg'] = '${body['msg']} $id ${body['msg']}';
+  return Response(201, body: json.encode(body));
+}
 ```
 
 **Content type header**
