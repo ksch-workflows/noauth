@@ -1,29 +1,12 @@
-# Mock Server
+# NOAuth Server
 
-This is a template repository which has the intention to make it quick and easy to build mock servers with
-the help of the [Dart](https://www.dart.dev) programming language.
+This repository hosts an OAuth authorization server which provides absolutely no security.
+Its purpose is to enable development tests.
 
 ## Dependencies
 
 - [Dart](https://www.dart.dev): Required to configure and run the mock server
 - [Docker](https://www.docker.com): (Optional) Required to package and publish the mock server
-
-## Getting started
-
-The intended usage is that you copy this repository and then adopt it.
-
-```bash
-PROJECT_NAME=example
-DEFAULT_BRANCH=master
-
-{
-git clone git@github.com:experimental-software/mock_server.git $PROJECT_NAME
-cd $PROJECT_NAME
-git checkout --orphan $DEFAULT_BRANCH
-git add .
-git commit -m "Initial commit"
-}
-```
 
 ## Run server via Dart VM
 
@@ -33,22 +16,19 @@ dart bin/server.dart
 
 # Run server on specific port
 dart bin/server.dart 9876
-
-# Run server with hot reload
-ENABLE_VM_SERVICE=true dart --enable-vm-service bin/server.dart
 ```
 
 ## Run server via Docker
 
 ```bash
 # Build docker image
-docker build . -t example_mock_server
+docker build . -t noauth
 
 # Run in daemon mode
-docker run -d -p 7777:8080 example_mock_server
+docker run -d -p 7777:8080 noauth
 
 # Run with attached terminal
-docker run -it -p 7777:8080 example_mock_server
+docker run -it -p 7777:8080 noauth
 
 # Try request
 curl localhost:7777/

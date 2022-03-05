@@ -1,5 +1,5 @@
-name: mock_server
-description: A template for building mock servers.
+name: noauth
+description: An authorization server which provides absolutely no security.
 version: 1.0.0
 # homepage: https://www.example.com
 
@@ -9,7 +9,6 @@ environment:
 dependencies:
   args: ^2.0.0
   shelf: ^1.1.0
-  shelf_hotreload: ^1.0.1
   shelf_router: ^1.0.0
   shelf_router_generator: ^1.0.1
 
