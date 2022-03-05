@@ -18,6 +18,21 @@ dart bin/server.dart
 dart bin/server.dart 9876
 ```
 
+## Usage
+
+```
+$ curl -i 'localhost:9876/authorize?redirect_uri=http://localhost:8080/bff/callback&state=12323'
+HTTP/1.1 302 Found
+location: http://localhost:8080/bff/callback?code=W7S4aFZ&state=12323
+date: Sat, 05 Mar 2022 18:11:33 GMT
+content-length: 0
+x-frame-options: SAMEORIGIN
+content-type: text/plain; charset=utf-8
+x-xss-protection: 1; mode=block
+x-content-type-options: nosniff
+server: dart:io with Shelf
+```
+
 ## Run server via Docker
 
 ```bash

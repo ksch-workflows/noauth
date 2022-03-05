@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:shelf/shelf.dart';
+
 import 'package:shelf_router/shelf_router.dart';
 
 part 'auth_service.g.dart';
@@ -11,13 +12,28 @@ Random rand = Random();
 class AuthService {
   @Route.get('/authorize')
   Future<Response> authorize(Request request) async {
-    var state = request.params['state'];
-    var redirectUri = request.params['redirect_uri'];
-    var code = createAuthorizationCode();
+    // Parse request params
+    var params = request.requestedUri.queryParameters;
+    if (params['redirect_uri'] == null) {
+      return Response(400, body: 'Missing redirect_uri param.\n');
+    }
+    var redirectUri = Uri.parse(params['redirect_uri']!);
+    var state = params['state'];
 
-    var responseHeaders = <String, String>{
-      'Location': 'http://localhost:8080/bff/callback?code=$code'
-    };
+    // Simulate authorization success
+    var location = Uri(
+        scheme: redirectUri.scheme,
+        userInfo: redirectUri.userInfo,
+        host: redirectUri.host,
+        port: redirectUri.port,
+        path: redirectUri.path,
+        queryParameters: {
+          'code': createAuthorizationCode(),
+          if (state != null) 'state': state,
+        });
+
+    // Create response
+    var responseHeaders = <String, String>{'Location': location.toString()};
     return Response(302, headers: responseHeaders);
   }
 
