@@ -84,3 +84,16 @@ Future<Response> createSomething(Request request, String id) async {
 ```dart
 var headers = {'content-type': 'application/json'};
 ```
+
+## Maintenance
+
+### Deploy to Cloud Run
+
+```bash
+gcloud init
+gcloud run deploy
+```
+
+## References
+
+- https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-service-other-languages
