@@ -1,5 +1,6 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:shelf/shelf.dart';
-
+import 'dart:convert';
 import 'package:shelf_router/shelf_router.dart';
 
 part 'token_service.g.dart';
@@ -45,8 +46,29 @@ class TokenService {
       return Response(400, body: "Missing form param 'code'.\n");
     }
 
-    return Response(200, body: 'Client ID: ${data['client_id']}');
+    // Create token response
+    var payload = {
+      'id_token': idToken(),
+    };
+    return Response(200, body: json.encode(payload));
   }
 
   Router get router => _$TokenServiceRouter(this);
+}
+
+String idToken() {
+  final jwt = JWT(
+    {
+      'nickname': 'jdoe',
+      'name': 'John Doe',
+      'email': 'jdoe@noauth-ga2speboxa-ew.a.run.app',
+      'sub': 'auth0|61c3060620680d00696e09a2',
+      'aud': 'jnebdD0fczAHoEBVrr6lE7OAuYchc2ZR',
+    },
+    issuer: 'https://noauth-ga2speboxa-ew.a.run.app/',
+  );
+  return jwt.sign(
+    SecretKey('\$SIGNING_SECRET'),
+    expiresIn: Duration(hours: 1),
+  );
 }
