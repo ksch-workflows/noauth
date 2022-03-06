@@ -1,4 +1,5 @@
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:noauth/util.dart';
 import 'package:shelf/shelf.dart';
 import 'dart:convert';
 import 'package:shelf_router/shelf_router.dart';
@@ -48,12 +49,25 @@ class TokenService {
 
     // Create token response
     var payload = {
+      'access_token': accessToken(),
+      'refresh_token': randomString(46),
       'id_token': idToken(),
+      'scope': 'openid profile email offline_access',
+      'expires_in': 86400,
+      'token_type': 'Bearer'
     };
     return Response(200, body: json.encode(payload));
   }
 
   Router get router => _$TokenServiceRouter(this);
+}
+
+String accessToken() {
+  final jwt = JWT({}, issuer: 'https://noauth-ga2speboxa-ew.a.run.app/');
+  return jwt.sign(
+    SecretKey('\$SIGNING_SECRET'),
+    expiresIn: Duration(seconds: 86400),
+  );
 }
 
 String idToken() {
@@ -69,6 +83,6 @@ String idToken() {
   );
   return jwt.sign(
     SecretKey('\$SIGNING_SECRET'),
-    expiresIn: Duration(hours: 1),
+    expiresIn: Duration(seconds: 86400),
   );
 }
