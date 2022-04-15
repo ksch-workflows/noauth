@@ -80,12 +80,16 @@ class TokenService {
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
 
     // Create token info response
-    var payload = {
+    var responsePayload = {
       'active': true,
       'client_id': decodedToken['client_id'],
       'scope': decodedToken['scope'],
     };
-    return Response(200, body: json.encode(payload));
+    var responseHeaders = {
+      'Content-Type': 'application/json',
+    };
+    return Response(200,
+        body: json.encode(responsePayload), headers: responseHeaders);
   }
 }
 
