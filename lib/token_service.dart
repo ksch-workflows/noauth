@@ -88,8 +88,11 @@ class TokenService {
     var responseHeaders = {
       'Content-Type': 'application/json',
     };
-    return Response(200,
-        body: json.encode(responsePayload), headers: responseHeaders);
+    return Response(
+      200,
+      body: json.encode(responsePayload),
+      headers: responseHeaders,
+    );
   }
 }
 
