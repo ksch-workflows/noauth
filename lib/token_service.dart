@@ -1,15 +1,19 @@
+import 'dart:convert';
+
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:noauth/util.dart';
 import 'package:shelf/shelf.dart';
-import 'dart:convert';
 import 'package:shelf_router/shelf_router.dart';
 
 part 'token_service.g.dart';
 
 class TokenService {
+  Router get router => _$TokenServiceRouter(this);
+
   @Route.post('/oauth/token')
   Future<Response> authorize(Request request) async {
-    // Parse request details
+    // Parse request payload
     var data = <String, String>{};
     for (var d in (await request.readAsString()).split('&')) {
       var pair = d.split('=');
@@ -59,7 +63,30 @@ class TokenService {
     return Response(200, body: json.encode(payload));
   }
 
-  Router get router => _$TokenServiceRouter(this);
+  @Route.post('/token-info')
+  Future<Response> provideTokenInfo(Request request) async {
+    // Parse request payload
+    var data = <String, String>{};
+    for (var d in (await request.readAsString()).split('&')) {
+      var pair = d.split('=');
+      data[pair[0]] = pair[1];
+    }
+    if (data['token'] == null) {
+      return Response(400, body: 'Missing token data.\n');
+    }
+    var token = data['token']!;
+
+    // Evaluate provided token
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+
+    // Create token info response
+    var payload = {
+      'active': true,
+      'client_id': decodedToken['client_id'],
+      'scope': decodedToken['scope'],
+    };
+    return Response(200, body: json.encode(payload));
+  }
 }
 
 String accessToken() {

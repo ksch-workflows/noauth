@@ -9,5 +9,6 @@ part of 'token_service.dart';
 Router _$TokenServiceRouter(TokenService service) {
   final router = Router();
   router.add('POST', r'/oauth/token', service.authorize);
+  router.add('POST', r'/token-info', service.provideTokenInfo);
   return router;
 }

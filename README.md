@@ -15,7 +15,7 @@ Its purpose is to enable development tests.
 dart bin/server.dart
 
 # Run server on specific port
-dart bin/server.dart 9876
+dart bin/server.dart 7777
 ```
 
 ## Usage
