@@ -12,7 +12,7 @@ class TokenService {
   Router get router => _$TokenServiceRouter(this);
 
   @Route.post('/oauth/token')
-  Future<Response> authorize(Request request) async {
+  Future<Response> createTokenFromAuthCode(Request request) async {
     // Parse request payload
     var data = <String, String>{};
     for (var d in (await request.readAsString()).split('&')) {
@@ -52,6 +52,19 @@ class TokenService {
     }
 
     // Create token response
+    var payload = {
+      'access_token': accessToken(),
+      'refresh_token': randomString(46),
+      'id_token': idToken(),
+      'scope': 'openid profile email offline_access',
+      'expires_in': 86400,
+      'token_type': 'Bearer'
+    };
+    return Response(200, body: json.encode(payload));
+  }
+
+  @Route.post('/token')
+  Future<Response> createToken(Request request) async {
     var payload = {
       'access_token': accessToken(),
       'refresh_token': randomString(46),

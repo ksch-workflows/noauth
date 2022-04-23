@@ -30,7 +30,7 @@ location: http://localhost:8080/bff/callback?code=W7S4aFZ&state=12323
 
 ### Create access token
 
-*Request*
+*Request (OAuth)*
 
 ```
 curl --request POST \
@@ -41,6 +41,12 @@ curl --request POST \
 	--data "redirect_uri=http://localhost/callback" \
 	--data "code=W7S4aFZ" \
 	"http://localhost:7777/oauth/token"
+```
+
+*Request (simple)*
+
+```
+curl -X POST localhost:7777/token
 ```
 
 *Response*
