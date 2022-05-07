@@ -76,9 +76,15 @@ $ echo "token=$ACCESS_TOKEN" | curl -X POST --data @'-' -s localhost:7777/token-
 ### Create login
 
 ```
-$ curl -X POST -i localhost:7777/login
+$ curl -X GET -i localhost:7777/login
 HTTP/1.1 204 No Content
-set-cookie: mockAccessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTA3MjkzMzAsImV4cCI6MTY1MDgxNTczMCwiaXNzIjoiaHR0cHM6Ly9ub2F1dGgtZ2Eyc3BlYm94YS1ldy5hLnJ1bi5hcHAvIn0.Yph02Sn6BtOOvb-Tx_qtizvUZFO0zdWZkdFaJg3T7p0; Path=/; HttpOnly
+set-cookie: mockAccessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTE5MTY1NzIsImV4cCI6MTY1MjAwMjk3MiwiaXNzIjoiaHR0cHM6Ly9ub2F1dGgtZ2Eyc3BlYm94YS1ldy5hLnJ1bi5hcHAvIn0.3w8uqedcxHi0BrNiu5X5FCSk5Xy5xcvdEtCWWgeJdjE; Path=/; Secure
+```
+
+```
+$ curl -X GET -i localhost:7777/login?redirect_uri=http://localhost:7778
+HTTP/1.1 303 See Other
+set-cookie: mockAccessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTE5MTY3MjcsImV4cCI6MTY1MjAwMzEyNywiaXNzIjoiaHR0cHM6Ly9ub2F1dGgtZ2Eyc3BlYm94YS1ldy5hLnJ1bi5hcHAvIn0.ZbhmfYxZIPjv6u_UxJZqweFAS1cYRWNj25w-Vs4ZF2s; Path=/; Secure
 ```
 
 ## Run server via Docker

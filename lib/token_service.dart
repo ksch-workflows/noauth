@@ -13,6 +13,7 @@ class TokenService {
 
   @Route.post('/oauth/token')
   Future<Response> createTokenFromAuthCode(Request request) async {
+
     // Parse request payload
     var data = <String, String>{};
     for (var d in (await request.readAsString()).split('&')) {

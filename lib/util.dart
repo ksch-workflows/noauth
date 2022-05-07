@@ -10,6 +10,10 @@ extension RequestExtension on Request {
   Future<dynamic> get jsonBody async {
     return json.decode(await readAsString());
   }
+
+  Map get queryParams {
+    return requestedUri.queryParameters;
+  }
 }
 
 String randomString(int length) {

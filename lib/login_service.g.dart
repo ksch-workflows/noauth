@@ -8,6 +8,7 @@ part of 'login_service.dart';
 
 Router _$LoginServiceRouter(LoginService service) {
   final router = Router();
-  router.add('POST', r'/login', service.login);
+  router.add('GET', r'/', service.welcome);
+  router.add('GET', r'/login', service.login);
   return router;
 }
